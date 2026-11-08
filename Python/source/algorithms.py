@@ -1,4 +1,6 @@
+
 """Implementations for Assignment 4: Dynamic Programming and String Processing."""
+
 
 def lcs(request):
     """Return one longest common subsequence of a and b."""
@@ -312,7 +314,6 @@ def suffix(request):
         position = inverse[start]
 
         if position == 0:
-            common = 0
             continue
 
         previous_start = sa[position - 1]
