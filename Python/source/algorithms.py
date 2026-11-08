@@ -1,7 +1,46 @@
 """Implement algorithm bodies. See docs/guide/CONTRACTS.md; inputs and outputs are dictionaries."""
+
 def lcs(request):
-    """Compare two versions of a sequence while preserving the order of shared characters. Implement lcs according to docs/guide/CONTRACTS.md."""
-    raise NotImplementedError("TODO lcs")
+    """Find one longest common subsequence of two strings."""
+    a = request["a"]
+    b = request["b"]
+
+    n = len(a)
+    m = len(b)
+
+    # dp[i][j] = LCS length for a[:i] and b[:j]
+    dp = [[0] * (m + 1) for _ in range(n + 1)]
+
+    # Build the DP table
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
+            if a[i - 1] == b[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+    # Reconstruct one optimal subsequence
+    result = []
+    i = n
+    j = m
+
+    while i > 0 and j > 0:
+        if a[i - 1] == b[j - 1]:
+            result.append(a[i - 1])
+            i -= 1
+            j -= 1
+        elif dp[i - 1][j] >= dp[i][j - 1]:
+            i -= 1
+        else:
+            j -= 1
+
+    result.reverse()
+
+    return {
+        "length": dp[n][m],
+        "sequence": "".join(result)
+    }
+
 
 def merge(request):
     """Plan the cheapest sequence of adjacent block merges when the original order must be preserved. Implement merge according to docs/guide/CONTRACTS.md."""
