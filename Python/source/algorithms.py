@@ -1,6 +1,4 @@
-
 """Implementations for Assignment 4: Dynamic Programming and String Processing."""
-
 
 def lcs(request):
     """Return one longest common subsequence of a and b."""
